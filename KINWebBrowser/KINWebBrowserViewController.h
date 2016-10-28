@@ -135,5 +135,12 @@
 // Can be called any time after initialization
 - (void)loadHTMLString:(NSString *)HTMLString;
 
+// Exposed the action button Methods. 
+#pragma mark - Public Interface UIBarButtonItem Target Action Methods
+- (void)backButtonPressed:(id)sender;
+- (void)forwardButtonPressed:(id)sender;
+- (void)refreshButtonPressed:(id)sender;
+- (void)stopButtonPressed:(id)sender;
+- (void)actionButtonPressed:(id)sender;
 @end
 
