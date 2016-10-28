@@ -106,6 +106,7 @@ static void *KINWebBrowserContext = &KINWebBrowserContext;
         self.actionButtonHidden = NO;
         self.showsURLInNavigationBar = NO;
         self.showsPageTitleInNavigationBar = YES;
+        self.allowedReload = YES;
         
         self.externalAppPermissionAlertView = [[UIAlertView alloc] initWithTitle:@"Leave this app?" message:@"This web page is trying to open an outside app. Are you sure you want to open it?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Open App", nil];
         
@@ -451,13 +452,15 @@ static void *KINWebBrowserContext = &KINWebBrowserContext;
 }
 
 - (void)refreshButtonPressed:(id)sender {
-    if(self.wkWebView) {
-        [self.wkWebView stopLoading];
-        [self.wkWebView reload];
-    }
-    else if(self.uiWebView) {
-        [self.uiWebView stopLoading];
-        [self.uiWebView reload];
+    if (self.allowedReload) {
+        if(self.wkWebView) {
+            [self.wkWebView stopLoading];
+            [self.wkWebView reload];
+        }
+        else if(self.uiWebView) {
+            [self.uiWebView stopLoading];
+            [self.uiWebView reload];
+        }
     }
 }
 
