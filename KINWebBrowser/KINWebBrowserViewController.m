@@ -466,7 +466,7 @@ static void *KINWebBrowserContext = &KINWebBrowserContext;
         }
         
         if (url) {
-            [self.delegate webBrowser:self didPressedAddToCart:self.uiWebViewCurrentURL];    
+            [self.delegate webBrowser:self didPressedAddToCart:self.uiWebViewCurrentURL];
         }
         
     }
@@ -666,7 +666,7 @@ static void *KINWebBrowserContext = &KINWebBrowserContext;
     
     if (self.btnAddtoCart) {
         self.btnAddtoCart.frame = CGRectMake(self.view.center.x - width/2,
-                                             self.view.frame.size.height - height-40,
+                                             self.view.frame.size.height - height - 43,
                                              width,
                                              height);
         NSLog(NSStringFromCGRect(self.btnAddtoCart.frame));
