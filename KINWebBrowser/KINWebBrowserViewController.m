@@ -30,8 +30,8 @@
 //  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-NSUInteger width = 50;
-NSUInteger height = 50;
+NSUInteger width = 70;
+NSUInteger height = 33;
 
 #import "KINWebBrowserViewController.h"
 
@@ -162,12 +162,13 @@ static void *KINWebBrowserContext = &KINWebBrowserContext;
     else if (self.browsingMode == kBrowsingModeShopping){
         // Initialize and add AddToCart Button
         self.btnAddtoCart = [UIButton buttonWithType:UIButtonTypeCustom];
-        [self.btnAddtoCart setTitle:@"Add To Cart" forState:UIControlStateNormal];
-        self.btnAddtoCart.frame = CGRectMake(self.view.center.x - width/2, self.view.frame.size.height - height, width, height);
+        
         [self.btnAddtoCart addTarget:self
-                                   action:@selector(addToCartButtonPressed:)
+                              action:@selector(addToCartButtonPressed:)
                     forControlEvents:UIControlEventTouchDown];
-                                   
+        
+        [self.btnAddtoCart setImage:[UIImage imageNamed:@"cart-icon-kin"] forState:UIControlStateNormal];
+        [self.btnAddtoCart setImage:[UIImage imageNamed:@"cart-icon-kin"] forState:UIControlStateHighlighted];
         [self.view addSubview:self.btnAddtoCart];
     }
 }
@@ -447,7 +448,7 @@ static void *KINWebBrowserContext = &KINWebBrowserContext;
 - (void)doneButtonPressed:(id)sender {
     [self dismissAnimated:YES];
 }
-                                   
+
 - (IBAction) addToCartButtonPressed:(id)sender {
     if([self.delegate respondsToSelector:@selector(webBrowser:didPressedAddToCart:)]) {
         [self.delegate webBrowser:self didPressedAddToCart:self.uiWebViewCurrentURL];
@@ -610,7 +611,7 @@ static void *KINWebBrowserContext = &KINWebBrowserContext;
     if (![self.externalAppPermissionAlertView isVisible]) {
         [self.externalAppPermissionAlertView show];
     }
-
+    
 }
 
 #pragma mark - UIAlertViewDelegate
@@ -647,7 +648,10 @@ static void *KINWebBrowserContext = &KINWebBrowserContext;
     [super viewWillLayoutSubviews];
     
     if (self.btnAddtoCart) {
-        self.btnAddtoCart.frame = CGRectMake(self.view.center.x - width/2, self.view.frame.size.height - height, width, height);
+        self.btnAddtoCart.frame = CGRectMake(self.view.center.x - width/2,
+                                             self.view.frame.size.height - height-40,
+                                             width,
+                                             height);
     }
 }
 
