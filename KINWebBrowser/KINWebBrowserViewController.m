@@ -167,8 +167,14 @@ static void *KINWebBrowserContext = &KINWebBrowserContext;
                               action:@selector(addToCartButtonPressed:)
                     forControlEvents:UIControlEventTouchDown];
         
-        [self.btnAddtoCart setImage:[UIImage imageNamed:@"cart-icon-kin"] forState:UIControlStateNormal];
-        [self.btnAddtoCart setImage:[UIImage imageNamed:@"cart-icon-kin"] forState:UIControlStateHighlighted];
+        NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+        UIImage *cartImage = [UIImage imageWithContentsOfFile: [bundle pathForResource:@"cart-icon-kin" ofType:@"png"]];
+        
+        [self.btnAddtoCart setImage:cartImage
+                           forState:UIControlStateNormal];
+        [self.btnAddtoCart setImage:cartImage
+                           forState:UIControlStateHighlighted];
+        
         [self.view addSubview:self.btnAddtoCart];
     }
 }
@@ -652,6 +658,7 @@ static void *KINWebBrowserContext = &KINWebBrowserContext;
                                              self.view.frame.size.height - height-40,
                                              width,
                                              height);
+        NSLog(NSStringFromCGRect(self.btnAddtoCart.frame));
     }
 }
 
