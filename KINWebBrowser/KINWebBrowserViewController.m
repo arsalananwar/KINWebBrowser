@@ -457,7 +457,18 @@ static void *KINWebBrowserContext = &KINWebBrowserContext;
 
 - (IBAction) addToCartButtonPressed:(id)sender {
     if([self.delegate respondsToSelector:@selector(webBrowser:didPressedAddToCart:)]) {
-        [self.delegate webBrowser:self didPressedAddToCart:self.uiWebViewCurrentURL];
+        NSURL *url = nil;
+        if (self.wkWebView) {
+            url = self.wkWebView.URL;
+        }
+        else if (self.uiWebView){
+            url = self.uiWebViewCurrentURL;
+        }
+        
+        if (url) {
+            [self.delegate webBrowser:self didPressedAddToCart:self.uiWebViewCurrentURL];    
+        }
+        
     }
 }
 
