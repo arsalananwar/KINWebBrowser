@@ -30,6 +30,9 @@
 //  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+NSUInteger width = 50;
+NSUInteger height = 50;
+
 #import "KINWebBrowserViewController.h"
 
 #import "TUSafariActivity.h"
@@ -47,6 +50,7 @@ static void *KINWebBrowserContext = &KINWebBrowserContext;
 @property (nonatomic, strong) NSURL *uiWebViewCurrentURL;
 @property (nonatomic, strong) NSURL *URLToLaunchWithPermission;
 @property (nonatomic, strong) UIAlertView *externalAppPermissionAlertView;
+@property (nonatomic, strong) UIButton *btnAddtoCart;
 
 @end
 
@@ -107,6 +111,7 @@ static void *KINWebBrowserContext = &KINWebBrowserContext;
         self.showsURLInNavigationBar = NO;
         self.showsPageTitleInNavigationBar = YES;
         self.allowedReload = YES;
+        self.browsingMode = kBrowsingModeNormal;
         
         self.externalAppPermissionAlertView = [[UIAlertView alloc] initWithTitle:@"Leave this app?" message:@"This web page is trying to open an outside app. Are you sure you want to open it?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Open App", nil];
         
@@ -150,6 +155,21 @@ static void *KINWebBrowserContext = &KINWebBrowserContext;
     [self.progressView setTrackTintColor:[UIColor colorWithWhite:1.0f alpha:0.0f]];
     [self.progressView setFrame:CGRectMake(0, self.navigationController.navigationBar.frame.size.height-self.progressView.frame.size.height, self.view.frame.size.width, self.progressView.frame.size.height)];
     [self.progressView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin];
+    
+    if (self.browsingMode == kBrowsingModeNormal) {
+        // Don't add AddToCart Button
+    }
+    else if (self.browsingMode == kBrowsingModeShopping){
+        // Initialize and add AddToCart Button
+        self.btnAddtoCart = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.btnAddtoCart setTitle:@"Add To Cart" forState:UIControlStateNormal];
+        self.btnAddtoCart.frame = CGRectMake(self.view.center.x - width/2, self.view.frame.size.height - height, width, height);
+        [self.btnAddtoCart addTarget:self
+                                   action:@selector(addToCartButtonPressed:)
+                    forControlEvents:UIControlEventTouchDown];
+                                   
+        [self.view addSubview:self.btnAddtoCart];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -427,6 +447,12 @@ static void *KINWebBrowserContext = &KINWebBrowserContext;
 - (void)doneButtonPressed:(id)sender {
     [self dismissAnimated:YES];
 }
+                                   
+- (IBAction) addToCartButtonPressed:(id)sender {
+    if([self.delegate respondsToSelector:@selector(webBrowser:didPressedAddToCart:)]) {
+        [self.delegate webBrowser:self didPressedAddToCart:self.uiWebViewCurrentURL];
+    }
+}
 
 #pragma mark - UIBarButtonItem Target Action Methods
 
@@ -615,6 +641,14 @@ static void *KINWebBrowserContext = &KINWebBrowserContext;
 
 - (BOOL)shouldAutorotate {
     return YES;
+}
+
+- (void) viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    
+    if (self.btnAddtoCart) {
+        self.btnAddtoCart.frame = CGRectMake(self.view.center.x - width/2, self.view.frame.size.height - height, width, height);
+    }
 }
 
 #pragma mark - Dealloc

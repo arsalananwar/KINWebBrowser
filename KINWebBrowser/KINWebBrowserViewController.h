@@ -33,6 +33,12 @@
 #import <UIKit/UIKit.h>
 #import <WebKit/WebKit.h>
 
+typedef enum BrowsingMode : NSUInteger {
+    kBrowsingModeNormal,
+    kBrowsingModeShopping,    
+} BrowsingMode;
+
+
 @class KINWebBrowserViewController;
 
 /*
@@ -55,6 +61,7 @@
 - (void)webBrowser:(KINWebBrowserViewController *)webBrowser didFinishLoadingURL:(NSURL *)URL;
 - (void)webBrowser:(KINWebBrowserViewController *)webBrowser didFailToLoadURL:(NSURL *)URL error:(NSError *)error;
 - (void)webBrowserViewControllerWillDismiss:(KINWebBrowserViewController*)viewController;
+- (void)webBrowser:(KINWebBrowserViewController *)webBrowser didPressedAddToCart:(NSURL *)URL;
 @end
 
 
@@ -112,6 +119,7 @@
 @property (nonatomic, assign) BOOL showsURLInNavigationBar;
 @property (nonatomic, assign) BOOL showsPageTitleInNavigationBar;
 @property (nonatomic, assign) BOOL allowedReload;
+@property (nonatomic, assign) BrowsingMode browsingMode;
 
 //Allow for custom activities in the browser by populating this optional array
 @property (nonatomic, strong) NSArray *customActivityItems;
