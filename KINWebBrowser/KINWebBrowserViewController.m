@@ -466,9 +466,8 @@ static void *KINWebBrowserContext = &KINWebBrowserContext;
         }
         
         if (url) {
-            [self.delegate webBrowser:self didPressedAddToCart:self.uiWebViewCurrentURL];
+            [self.delegate webBrowser:self didPressedAddToCart:url];
         }
-        
     }
 }
 
