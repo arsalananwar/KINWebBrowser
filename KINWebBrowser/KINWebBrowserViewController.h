@@ -119,6 +119,7 @@ typedef enum BrowsingMode : NSUInteger {
 @property (nonatomic, assign) BOOL showsURLInNavigationBar;
 @property (nonatomic, assign) BOOL showsPageTitleInNavigationBar;
 @property (nonatomic, assign) BOOL allowedReload;
+@property (nonatomic, assign) BOOL showBottomToolBar;
 @property (nonatomic, assign) BrowsingMode browsingMode;
 
 //Allow for custom activities in the browser by populating this optional array

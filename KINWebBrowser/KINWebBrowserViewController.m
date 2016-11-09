@@ -111,6 +111,7 @@ static void *KINWebBrowserContext = &KINWebBrowserContext;
         self.showsURLInNavigationBar = NO;
         self.showsPageTitleInNavigationBar = YES;
         self.allowedReload = YES;
+        self.showBottomToolBar = YES;
         self.browsingMode = kBrowsingModeNormal;
         
         self.externalAppPermissionAlertView = [[UIAlertView alloc] initWithTitle:@"Leave this app?" message:@"This web page is trying to open an outside app. Are you sure you want to open it?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Open App", nil];
@@ -183,7 +184,7 @@ static void *KINWebBrowserContext = &KINWebBrowserContext;
     [super viewWillAppear:animated];
     
     [self.navigationController setNavigationBarHidden:NO animated:YES];
-    [self.navigationController setToolbarHidden:NO animated:YES];
+    [self.navigationController setToolbarHidden:!self.browsingMode animated:YES];
     
     [self.navigationController.navigationBar addSubview:self.progressView];
     
